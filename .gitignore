@@ -1,0 +1,143 @@
+# ============================================================
+# SiteMind AI - Git Ignore
+# ============================================================
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Python build/package
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+
+# Local uploads / generated data
+uploaded_evidence/
+uploads/
+storage/
+media/
+tmp/
+temp/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+!.env.template
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.npm/
+.pnpm-store/
+
+# Next.js
+.next/
+out/
+
+# TypeScript
+*.tsbuildinfo
+
+# Testing / coverage
+.coverage
+.coverage.*
+coverage/
+htmlcov/
+.tox/
+.nox/
+.pytest_cache/
+
+# Logs
+*.log
+logs/
+
+# IDE
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Temporary / backup
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+
+# Local AI / model files
+models/
+checkpoints/
+*.pt
+*.pth
+*.onnx
+*.bin
+*.safetensors
+
+# Generated AI outputs
+ai_outputs/
+vision_outputs/
+analysis_outputs/
+generated_reports/
+
+# Frontend generated files
+frontend/public/generated/
+frontend/public/uploads/
+
+# Vercel
+.vercel/
+
+# Docker local overrides
+docker-compose.override.yml
+
+# Frontend dependencies/build
+node_modules/
+frontend/node_modules/
+.next/
+frontend/.next/
+
+# Python cache
+__pycache__/
+.pytest_cache/
+
+# Python environment
+.venv/
+
+# Local database
+*.db
+*.sqlite
+*.sqlite3
+
+# Secrets
+.env
+.env.*
+!.env.example

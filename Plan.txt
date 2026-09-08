@@ -1,0 +1,55 @@
+# Implementation Plan — SiteMind AI Platform (Approved for Execution)
+
+SiteMind AI is an end-to-end, multi-tenant AI construction monitoring, progress verification, delay prediction, and management intelligence platform. It reconciles project schedules, site evidence (photos/videos), contractor reports, and attendance data into an objective **Construction Truth Layer**.
+
+## System Architecture
+
+### Backend (`backend/`)
+- **Framework**: FastAPI (Python 3.11+) with Async SQLAlchemy, Pydantic v2, and SQLite/PostgreSQL support.
+- **Multi-Tenant & RBAC**: Organization isolation with 6 roles (`SUPER_ADMIN`, `ORG_ADMIN`, `PROJECT_MANAGER`, `SITE_ENGINEER`, `CONTRACTOR`, `EXECUTIVE`).
+- **Schedule Importer**: Excel (`.xlsx`) & CSV parser with dependency graph parsing and schedule versioning (`ScheduleVersion`).
+- **Evidence Processing & Quality Engine**: Asynchronous job queue, resolution/lighting/relevance scoring, duplicate detection.
+- **AI Construction Vision Engine**:
+  - Modular AI provider abstraction (mock local vision provider + multi-modal AI interface).
+  - Bounding box object detection: Structures, Materials, Equipment, People & PPE.
+- **Construction Truth Layer Engine**: Deterministic reconciliation of `Planned`, `Reported`, `AI Estimated`, producing `Reconciled Progress` with Confidence Score and Evidence Ledger explanations ("Why AI says X%").
+- **Delay & Risk Engine**: Downstream delay propagation across activity dependencies, probability calculation, root cause decomposition (manpower 34%, material 27%, contractor 21%, preceding 12%), distinguishing confirmed vs calculated vs AI inferred causes.
+- **Daily Site Intelligence Report Engine**: Auto-generated Markdown and structured JSON report generator.
+- **AI Management Assistant**: Natural language query interface backed by 11 real database analysis tools (get_project_status, calculate_schedule_variance, get_project_risks, etc.) preventing hallucination.
+
+### Frontend (`frontend/`)
+- **Framework**: Next.js 14+ (App Router, TypeScript, React 19, Vanilla CSS + Tailwind CSS tokens, Lucide Icons).
+- **Views & Modules**:
+  1. Login & Organization Authentication
+  2. Executive Portfolio Dashboard (Risk flags, average progress, schedule variance, active project cards)
+  3. Projects Hierarchy (Org $\rightarrow$ Project $\rightarrow$ Building $\rightarrow$ Floor $\rightarrow$ Zone $\rightarrow$ Activity)
+  4. Schedule Manager (Excel/CSV upload & Gantt timeline visualizer)
+  5. Site Evidence Gallery & AI Vision Overlay ("Why AI says X%" breakdown modal & before/after temporal comparison slider)
+  6. Planned vs Actual & Truth Layer Analytics
+  7. Risk & Delay Propagation Tree & Root Cause Analysis
+  8. Contractor Performance Tracker & Material Intelligence
+  9. Safety Event Monitoring (PPE violation alerts with image evidence)
+  10. Daily AI Site Intelligence Reports (Printable/Styled report viewer)
+  11. Natural Language AI Management Assistant (Chat interface with sample prompt triggers)
+  12. Mobile Site Engineer Mode (3-click field photo capture & tag upload flow)
+
+---
+
+## Execution Plan & Deliverables
+
+1. **Backend Infrastructure & Database Models**:
+   - `backend/app/core/`: config, database, security (JWT, Password hashing), logging.
+   - `backend/app/models/`: SQLAlchemy ORM models for all domain entities.
+   - `backend/app/schemas/`: Pydantic validation schemas for requests & responses.
+2. **AI Engines & Business Logic**:
+   - `backend/app/ai_engine/`: Vision, Quality, Progress, Truth Layer, Delay, Risk, Root Cause, Assistant Tools.
+   - `backend/app/services/`: Services for evidence processing, reconciliation, reports, seed data generator.
+3. **REST API Routers**:
+   - `backend/app/api/`: All 16 endpoint modules (`auth`, `organizations`, `projects`, `buildings`, `floors`, `zones`, `activities`, `schedules`, `evidence`, `progress`, `risks`, `contractors`, `materials`, `safety`, `reports`, `assistant`).
+4. **Seed Script & Realistic Dataset**:
+   - `backend/seed_data/` & `backend/app/core/seed.py`: Full Hyderabad demo organization ("Hyderabad Infrastructure Ltd"), sample projects ("Hyderabad Tower A", "Gachibowli Villa Project"), buildings, floors, activities, visual evidence, AI observations, delay risks, materials, safety events, and daily reports.
+5. **Frontend Application**:
+   - `frontend/src/`: Full Next.js pages, UI components, API client, CSS design system, and responsive views.
+6. **Testing & Verification**:
+   - `backend/tests/`: Pytest suite for models, API endpoints, schedule import, truth layer, and assistant tools.
+   - Run tests, start dev servers, and perform complete end-to-end verification.
